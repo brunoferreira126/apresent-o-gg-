@@ -31,6 +31,32 @@ function Bullets({ items }) {
   );
 }
 
+function GoalsForm({ fields }) {
+  return (
+    <div className="goals-form">
+      {fields.map((field) => (
+        <label key={field}>
+          <span>{field}</span>
+          <input aria-label={field} />
+        </label>
+      ))}
+    </div>
+  );
+}
+
+function ObjectiveSelector({ items }) {
+  return (
+    <div className="objective-selector">
+      {items.map((item) => (
+        <label key={item}>
+          <input type="checkbox" />
+          <span>{item}</span>
+        </label>
+      ))}
+    </div>
+  );
+}
+
 function Statement({ slide }) {
   return (
     <div className="statement-lines">
@@ -65,7 +91,7 @@ function Comparison({ slide }) {
   );
 }
 
-function renderContent(slide) {
+function renderContent(slide, actions = {}) {
   switch (slide.type) {
     case 'cover':
       return (
@@ -123,6 +149,7 @@ function renderContent(slide) {
         <>
           <SlideHeader title={slide.title} />
           <FlowSlide flow={slide.flow} muted={slide.muted} />
+          {slide.footer && <p className="footer-line">{slide.footer}</p>}
         </>
       );
     case 'agenda':
@@ -203,6 +230,22 @@ function renderContent(slide) {
           </div>
         </>
       );
+    case 'goalsForm':
+      return (
+        <>
+          <SlideHeader title={slide.title} />
+          <GoalsForm fields={slide.fields} />
+          {slide.footer && <p className="footer-line">{slide.footer}</p>}
+        </>
+      );
+    case 'objectiveSelector':
+      return (
+        <>
+          <SlideHeader title={slide.title} />
+          {slide.intro && <p className="intro-line">{slide.intro}</p>}
+          <ObjectiveSelector items={slide.items} />
+        </>
+      );
     case 'closing':
       return (
         <div className="closing-block">
@@ -216,7 +259,13 @@ function renderContent(slide) {
           {slide.logo && <LogoMark />}
           <h1>{slide.title}</h1>
           <p>{slide.subtitle}</p>
-          <span>{slide.text}</span>
+          {slide.action ? (
+            <button className="mission-button" onClick={actions.onMissionStart} type="button">
+              {slide.text}
+            </button>
+          ) : (
+            <span>{slide.text}</span>
+          )}
         </div>
       );
     default:
@@ -224,11 +273,11 @@ function renderContent(slide) {
   }
 }
 
-export default function Slide({ slide, current, total }) {
+export default function Slide({ slide, current, total, onMissionStart }) {
   return (
     <section className={`slide slide-${slide.type}`} key={`${current}-${slide.title}`}>
       <div className="slide-bg" />
-      <div className="slide-shell">{renderContent(slide)}</div>
+      <div className="slide-shell">{renderContent(slide, { onMissionStart })}</div>
       <span className="corner-label">GG 500</span>
       <span className="print-count">
         {current}/{total}

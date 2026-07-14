@@ -10,6 +10,7 @@ export default function App() {
   const [index, setIndex] = useState(0);
   const total = slides.length;
   const currentSlide = slides[index];
+  const strategyStartIndex = slides.findIndex((slide) => slide.id === 'estrategia-gg-500');
 
   const controls = useMemo(
     () => ({
@@ -43,7 +44,12 @@ export default function App() {
   return (
     <main className="deck" aria-live="polite">
       <ProgressBar current={index + 1} total={total} />
-      <Slide slide={currentSlide} current={index + 1} total={total} />
+      <Slide
+        slide={currentSlide}
+        current={index + 1}
+        total={total}
+        onMissionStart={() => controls.goTo(strategyStartIndex >= 0 ? strategyStartIndex : 0)}
+      />
       <Navigation
         current={index + 1}
         total={total}

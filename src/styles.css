@@ -298,7 +298,9 @@ p {
 
 .timeline,
 .bullet-grid,
-.checklist {
+.checklist,
+.goals-form,
+.objective-selector {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
@@ -307,7 +309,9 @@ p {
 
 .timeline-item,
 .bullet-grid span,
-.checklist span {
+.checklist span,
+.goals-form label,
+.objective-selector label {
   min-height: 70px;
   display: flex;
   align-items: center;
@@ -318,6 +322,41 @@ p {
   border-radius: 8px;
   font-size: clamp(1rem, 1.8vw, 1.35rem);
   font-weight: 800;
+}
+
+.goals-form label,
+.objective-selector label {
+  flex-direction: column;
+  align-items: stretch;
+  border-left-color: var(--gold);
+}
+
+.goals-form label span,
+.objective-selector label span {
+  color: var(--white);
+}
+
+.goals-form input {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.76);
+  color: var(--white);
+  background: transparent;
+  outline: none;
+  font-size: 1.15rem;
+}
+
+.objective-selector label {
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.objective-selector input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--red);
+  flex: 0 0 auto;
 }
 
 .timeline-item span {
@@ -432,6 +471,28 @@ blockquote {
   color: var(--gold);
 }
 
+.mission-button {
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid rgba(212, 175, 55, 0.8);
+  border-radius: 8px;
+  padding: 18px 24px;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--red), #7d0710);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 18px 60px rgba(198, 16, 29, 0.35);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.mission-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 72px rgba(198, 16, 29, 0.48);
+}
+
 .corner-label,
 .print-count {
   position: fixed;
@@ -533,7 +594,9 @@ blockquote {
   .comparison,
   .timeline,
   .bullet-grid,
-  .checklist {
+  .checklist,
+  .goals-form,
+  .objective-selector {
     grid-template-columns: 1fr;
   }
 
